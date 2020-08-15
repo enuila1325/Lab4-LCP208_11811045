@@ -30,11 +30,14 @@ public:
     static int jugar(vector<string>, Jugador);
 };
 
+int limiteBusqueda = 52;
+
 int Juego::jugar(vector<string> _baraja, Jugador _player)
 {
-    int indCartaRepartir = 1 + rand() % (_baraja.size() + 1);
+    int indCartaRepartir = 1 + rand() % (limiteBusqueda + 1);
     _player.baraja.push_back(_baraja.at(indCartaRepartir));
     _baraja.erase(_baraja.begin() + indCartaRepartir);
+    limiteBusqueda--;
     _player.puntuacion = 0;
     for (int i = 0; i < _player.baraja.size(); i++)
     {
@@ -54,7 +57,7 @@ int Juego::jugar(vector<string> _baraja, Jugador _player)
             {
                 _player.puntuacion += 12;
             }
-            else if (valorDeCarta == "k")
+            else if (valorDeCarta == "K")
             {
                 _player.puntuacion += 13;
             }
@@ -72,10 +75,9 @@ int Juego::jugar(vector<string> _baraja, Jugador _player)
     {
         for (int i = 0; i < _player.baraja.size(); i++)
         {
-            cout << _baraja.at(i) << " ";
+            cout << _player.baraja.at(i) << " ";
         }
     }
-    cout << endl;
     return _player.puntuacion;
 }
 
@@ -201,7 +203,9 @@ int main()
         {
         case 1:
         {
-            int jugadores;
+            int jugadores = 0;
+            int puntajeJugadorPrincipal = 0;
+            int puntajeBots = 0;
             string nombre;
             vector<string> baraja;
             baraja = crearBaraja(baraja);
@@ -222,10 +226,30 @@ int main()
             }
             for (int i = 0; i < bots.size(); i++)
             {
-                for (int j = 0; j < 2; j++)
+                for (int j = 0; j < 1; j++)
                 {
                     Juego::jugar(baraja, bots.at(i));
                 }
+            }
+            int repeticion = 0;
+            cout << "Desea tomar otra carta? 1.SI 2.NO" << endl;
+            cin >> repeticion;
+            while (repeticion == 1)
+            {
+                Juego::jugar(baraja, principal);
+                for (int i = 0; i < bots.size(); i++)
+                {
+                    Juego::jugar(baraja, bots.at(i));
+                }
+                cout << "Desea tomar otra carta? 1.SI 2.NO" << endl;
+                cin >> repeticion;
+            }
+            puntajeJugadorPrincipal = principal.puntuacion;
+            cout << principal.nombre << " " << puntajeJugadorPrincipal << endl;
+            for (int i = 0; i < bots.size(); i++)
+            {
+                puntajeBots = bots.at(i).puntuacion;
+                cout << bots.at(i).nombre << " " << puntajeBots << endl;
             }
         }
         break;
