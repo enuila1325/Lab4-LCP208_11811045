@@ -1,14 +1,16 @@
 #include <iostream>
 #include <cstring>
 #include <vector>
+#include <ctime>
 using namespace std;
-
 class Jugador
 {
     friend class Juego;
+    friend int main();
 
 private:
-    string nombre, baraja;
+    string nombre;
+    vector<string> baraja;
     int puntuacion;
 
 public:
@@ -23,13 +25,61 @@ Jugador::Jugador(string _nombre)
 
 class Juego
 {
-
 private:
 public:
-    void jugar(string);
+    static int jugar(vector<string>, Jugador);
 };
 
-vector<string> crearBaraja(vector<string> _baraja)
+int Juego::jugar(vector<string> _baraja, Jugador _player)
+{
+    int indCartaRepartir = 1 + rand() % (_baraja.size() + 1);
+    _player.baraja.push_back(_baraja.at(indCartaRepartir));
+    _baraja.erase(_baraja.begin() + indCartaRepartir);
+    _player.puntuacion = 0;
+    for (int i = 0; i < _player.baraja.size(); i++)
+    {
+        int cartaAux = _player.baraja.at(i).size();
+        if (cartaAux == 4)
+        {
+            string valorDeCarta = _player.baraja.at(i).substr(0, 1);
+            if (valorDeCarta == "A")
+            {
+                _player.puntuacion += 1;
+            }
+            else if (valorDeCarta == "J")
+            {
+                _player.puntuacion += 11;
+            }
+            else if (valorDeCarta == "Q")
+            {
+                _player.puntuacion += 12;
+            }
+            else if (valorDeCarta == "k")
+            {
+                _player.puntuacion += 13;
+            }
+            else
+            {
+                _player.puntuacion += stoi(valorDeCarta);
+            }
+        }
+        else if (cartaAux == 5)
+        {
+            _player.puntuacion += 10;
+        }
+    }
+    if (_player.nombre.at(1) != *"b")
+    {
+        for (int i = 0; i < _player.baraja.size(); i++)
+        {
+            cout << _baraja.at(i) << " ";
+        }
+    }
+    cout << endl;
+    return _player.puntuacion;
+}
+
+static vector<string> crearBaraja(vector<string> _baraja)
 {
     string carta = "";
     for (int i = 1; i <= 52; i++)
@@ -140,11 +190,12 @@ vector<string> crearBaraja(vector<string> _baraja)
 
 int main()
 {
+    srand((unsigned int)time(NULL));
     int opcion;
     char resp = 's';
     while (resp == 's')
     {
-        cout << "1. JUGAR\n.2. SALIR\nSeleccione una opcion" << endl;
+        cout << "1. JUGAR\n2. SALIR\nSeleccione una opcion" << endl;
         cin >> opcion;
         switch (opcion)
         {
@@ -164,6 +215,17 @@ int main()
             {
                 Jugador bot("Bot-" + to_string(i + 1));
                 bots.push_back(bot);
+            }
+            for (int i = 0; i < 2; i++)
+            {
+                Juego::jugar(baraja, principal);
+            }
+            for (int i = 0; i < bots.size(); i++)
+            {
+                for (int j = 0; j < 2; j++)
+                {
+                    Juego::jugar(baraja, bots.at(i));
+                }
             }
         }
         break;
