@@ -34,6 +34,7 @@ int limiteBusqueda = 52;
 
 int Juego::jugar(vector<string> _baraja, Jugador _player)
 {
+    _player.puntuacion = 0;
     int indCartaRepartir = 1 + rand() % (limiteBusqueda + 1);
     _player.baraja.push_back(_baraja.at(indCartaRepartir));
     _baraja.erase(_baraja.begin() + indCartaRepartir);
@@ -98,22 +99,22 @@ static vector<string> crearBaraja(vector<string> _baraja)
         }
         else if (i == 11)
         {
-            carta = "J <>";
+            carta = "J<>";
             _baraja.push_back(carta);
         }
         else if (i == 12)
         {
-            carta = "Q <>";
+            carta = "Q<>";
             _baraja.push_back(carta);
         }
         else if (i == 13)
         {
-            carta = "K <>";
+            carta = "K<>";
             _baraja.push_back(carta);
         }
         else if (i == 14)
         {
-            carta = "A <3";
+            carta = "A<3";
             _baraja.push_back(carta);
         }
         else if (i >= 15 && i <= 23)
@@ -123,22 +124,22 @@ static vector<string> crearBaraja(vector<string> _baraja)
         }
         else if (i == 24)
         {
-            carta = "J <3";
+            carta = "J<3";
             _baraja.push_back(carta);
         }
         else if (i == 25)
         {
-            carta = "Q <3";
+            carta = "Q<3";
             _baraja.push_back(carta);
         }
         else if (i == 26)
         {
-            carta = "K <3";
+            carta = "K<3";
             _baraja.push_back(carta);
         }
         else if (i == 27)
         {
-            carta = "A O?";
+            carta = "AO?";
             _baraja.push_back(carta);
         }
         else if (i >= 28 && i <= 36)
@@ -148,22 +149,22 @@ static vector<string> crearBaraja(vector<string> _baraja)
         }
         else if (i == 37)
         {
-            carta = "J O?";
+            carta = "JO?";
             _baraja.push_back(carta);
         }
         else if (i == 38)
         {
-            carta = "Q O?";
+            carta = "QO?";
             _baraja.push_back(carta);
         }
         else if (i == 39)
         {
-            carta = "K O?";
+            carta = "KO?";
             _baraja.push_back(carta);
         }
         else if (i == 40)
         {
-            carta = "A -#";
+            carta = "A-#";
             _baraja.push_back(carta);
         }
         else if (i >= 40 && i <= 49)
@@ -173,17 +174,17 @@ static vector<string> crearBaraja(vector<string> _baraja)
         }
         else if (i == 50)
         {
-            carta = "J -#";
+            carta = "J-#";
             _baraja.push_back(carta);
         }
         else if (i == 51)
         {
-            carta = "Q -#";
+            carta = "Q-#";
             _baraja.push_back(carta);
         }
         else if (i == 52)
         {
-            carta = "K -#";
+            carta = "K-#";
             _baraja.push_back(carta);
         }
     }
